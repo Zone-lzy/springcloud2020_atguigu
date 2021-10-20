@@ -1,0 +1,44 @@
+server:
+  port: 3344
+
+spring:
+  application:
+    name:  cloud-config-center #注册进Eureka服务器的微服务名
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Zone-lzy/springcloud-config.git
+          search-paths: springcloud-config #搜索目录
+          default-label: master #读取分支  ->注意这里默认是main分支将其改为master便可以访问，否则会报无法打开以及连接超时的异常，因为没有这个master分支
+          username: Zone-lzy
+          password: lzy20151511
+          skip-ssl-validation: true
+#          #GitHub上面的git仓库名字https://github.com/Zone-lzy/springcloud-config.git
+##          uri: git@github.com:Zone-lzy/springcloud-config.git
+#          uri: git@github.com:Zone-lzy/springcloud-config.git #GitHub上面的git仓库名字
+          ####搜索目录
+#          search-paths:
+#            - springcloud-config
+      ####读取分支
+#      label: master
+
+#rabbitmq相关配置<--------------------------
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+
+#服务注册到eureka地址
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
+
+##rabbitmq相关配置,暴露bus刷新配置的端点<--------------------------
+management:
+  endpoints: #暴露bus刷新配置的端点
+    web:
+      exposure:
+        include: 'bus-refresh'

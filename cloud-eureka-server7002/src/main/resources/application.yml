@@ -1,0 +1,22 @@
+server:
+  port: 7002
+#  修改映射文件  C:\Windows\System32\drivers\etc   -> hosts 增加如下两行，一台物理机器模拟
+#  127.0.0.1 eureka7001.com
+#  127.0.0.1 eureka7002.com
+eureka:
+  instance:
+    hostname: eureka7002.com # eureka服务器端的实例
+  client:
+    # false 表示不向注册中心注册自己
+    register-with-eureka: false
+    # false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
+    fetch-registry: false
+    service-url:
+      # 设置与eureka server交互的地址查询服务和注册服务都需要依赖这个地址
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/  # 单击的写法
+      defaultZone: http://eureka7001.com:7001/eureka/   # 集群的写法，相互注册
+  server:
+    #默认开启自我保护模式true,false为禁止自我保护机制
+    enable-self-preservation: false
+    # 超过时间及时删除
+    eviction-interval-timer-in-ms: 2000

@@ -1,0 +1,25 @@
+server:
+  # 模拟用户下订单 浏览网页的默认端口就是80端口，所以访问80端口的时候可以不用带上80端口号
+  port: 80
+
+spring:
+  application:
+    # 非常重要命名好了不要轻易改动，服务注册的名字->字母全变为大写的 , 不写是UNKNOWN
+    name: cloud-order-service
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1
+
+eureka:
+  client:
+    # 表示是否将自己注册进EurekaServer默认为true
+    register-with-eureka: true
+    # 是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true，才能配合ribbon使用负载均衡
+    fetch-registry: true
+    service-url:
+      # 当eureka是单击的时候使用的配置
+      #      defaultZone: http://localhost:7001/eureka
+      # 当eureka是集群的时候的配置 集群版本
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka
